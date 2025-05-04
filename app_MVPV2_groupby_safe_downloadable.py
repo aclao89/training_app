@@ -158,7 +158,8 @@ if st.button("✅ Save Workout Log"):
     st.toast("Workout saved!", icon="💪")
 
     st.markdown("### ✅ Weekly Completion Summary")
-    recent = df_log[pd.to_datetime(df_log["Date"]) >= pd.Timestamp.now() - pd.Timedelta(days=7)]
+    # recent = df_log[pd.to_datetime(df_log["Date"]) >= pd.Timestamp.now() - pd.Timedelta(days=7)]
+    recent = df_log[df_log["Client Name"] == first_name].sort_values(by="Date", ascending=False).head(10)
 if not recent.empty and "Workout #" in recent.columns and "Date" in recent.columns:
     summary = recent.groupby(["Workout #", "Date"]).agg(
         Exercises=("Exercise", "count"),
